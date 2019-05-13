@@ -1,8 +1,7 @@
 package com.ctransaction.contract.node;
 
-import com.sun.org.apache.xpath.internal.operations.String;
-
-import java.util.HashMap;
+import com.ctransaction.contract.transaction.TransactionBlock;
+import java.util.List;
 
 /**
  * Created by chpy on 19/3/30.
@@ -12,7 +11,10 @@ public class CNode {
     private int id;
     private String ip;
     private int status;
-    private HashMap<String,String> bindService;
+    /**
+     * 节点包含的事务块
+     */
+    private List<TransactionBlock> blocks;
 
     public int getId() {
         return id;
@@ -38,11 +40,11 @@ public class CNode {
         this.status = status;
     }
 
-    public HashMap<String, String> getBindService() {
-        return bindService;
+    public List<TransactionBlock> getBlocks() {
+        return blocks;
     }
 
-    public void setBindService(HashMap<String, String> bindService) {
-        this.bindService = bindService;
+    public void setBlocks(List<TransactionBlock> blocks) {
+        this.blocks = blocks;
     }
 }
