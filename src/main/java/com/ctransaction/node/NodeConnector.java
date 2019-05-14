@@ -31,31 +31,26 @@ public class NodeConnector implements IRegister {
         CommonResult result = new CommonResult();
         result.setSuccess(false);
         //redis注册
-        try(ShardedJedis jedis = shardedJedisPool.getResource()) {
+        try (ShardedJedis jedis = shardedJedisPool.getResource()) {
             //获取当前所有节点,并添加节点
             Set<String> nodeValue = jedis.smembers(REDIS_NODE);
             List<CNode> nodes = nodeValue.stream()
                     .map(t -> JSONObject.parseObject(t, CNode.class))
                     .collect(Collectors.toList());
-            //取出最后一个节点
-            Optional<CNode> lastNode = nodes.stream().max(Comparator.comparingInt(CNode::getId));
-            Integer maxId = lastNode.isPresent() ? lastNode.get().getId() : 0;
+            //取出合适的id
+            int tempId = 1;
+            for (CNode n : nodes) {
+                //if(n.getId())
+            }
             //新节点
+            node.setId(tempId);
+            node.setStatus(NodeStatus.HEALTH.getValue());
             //获取锁添加节点
-            if(RedisLock.trtGetLock(jedis,REDIS_NODE_LOCK,1000)){
+            if (RedisLock.trtGetLock(jedis, REDIS_NODE_LOCK, 1000)) {
                 result.setSuccess(true);
             }
         }
         return result;
-    }
-
-    public CNode createNode(Integer maxId){
-        CNode node = new CNode();
-        node.setId(maxId);
-        node.setIp(CommonUtils.getLocalIP());
-        node.setStatus(NodeStatus.HEALTH.getValue());
-        //todo...
-        return node;
     }
 
     public CommonResult unRegister(CNode node) {
