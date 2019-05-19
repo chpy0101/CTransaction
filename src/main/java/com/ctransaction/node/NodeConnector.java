@@ -1,7 +1,6 @@
 package com.ctransaction.node;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ctransaction.base.utils.CommonUtils;
 import com.ctransaction.base.utils.RedisLock;
 import com.ctransaction.contract.CommonResult;
 import com.ctransaction.contract.entity.NodeStatus;
@@ -11,7 +10,8 @@ import org.springframework.stereotype.Component;
 import redis.clients.jedis.ShardedJedis;
 import redis.clients.jedis.ShardedJedisPool;
 
-import java.util.*;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 /**
@@ -39,8 +39,11 @@ public class NodeConnector implements IRegister {
                     .collect(Collectors.toList());
             //取出合适的id
             int tempId = 1;
-            for (CNode n : nodes) {
-                //if(n.getId())
+            if(nodes.size()>=1) {
+                for (int i = 1; i < nodes.size(); i++) {
+                    CNode preNode = nodes.get(i - 1);
+
+                }
             }
             //新节点
             node.setId(tempId);
