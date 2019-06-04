@@ -18,7 +18,7 @@ public class SortUtils {
      * @param <T>
      * @return
      */
-    public static <T> List<T> insertSort(List<T> list, Comparator<T> comparator) {
+    public static <T> List<T> insertionSort(List<T> list, Comparator<T> comparator) {
         if (list == null || list.size() == 1)
             return list;
         for (int i = 1; i < list.size(); i++) {
@@ -37,11 +37,5 @@ public class SortUtils {
             }
         }
         return list;
-    }
-
-    public static void main(String[] args) {
-        List<Integer> list = (List<Integer>) CollectionUtils.arrayToList(new int[]{1, 98, 5, 76, 99, 4, 3, 88});
-        insertSort(list, (t1, t2) -> t1.compareTo(t2));
-        System.out.println(list);
     }
 }
